@@ -63,7 +63,7 @@ export default function Home() {
       <nav className="navbar">
         <div className="logo ">
           <img className='main-logo' src={logo} alt="Logo"/>Top Matches</div>
-        <button className="btn btn-outline-danger me-3">Logout</button>
+        <button className="btn btn-outline-warning fw-bold me-3">Logout</button>
       </nav>
 
       {/* Hero Section */}
