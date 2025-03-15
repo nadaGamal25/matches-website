@@ -126,7 +126,17 @@ input:focus{
   background: #41a114;
 }
 
-
+.pass-box{
+  position: relative;
+}
+.seenpass{
+  position: absolute;
+  right: 10px;
+  top: 9px;
+  color: #171717;
+  cursor: pointer;
+  z-index: 9999999;
+}
 
 /* Navbar */
 .navbar {

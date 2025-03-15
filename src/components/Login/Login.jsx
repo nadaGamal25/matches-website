@@ -1,7 +1,9 @@
-import React from 'react'
+import React, { useState } from 'react'
 import logo from "../../assets/logo.png"
 
 export default function Login() {
+  const [visible , setVisible] =useState(false);
+
   return (
     <>
      {/* <div className="login-container">
@@ -58,11 +60,21 @@ export default function Login() {
               <i className="fas fa-envelope"></i>
             </span>
           </div>
-          <div className="input-group">
-            <input type="password" className="form-control" placeholder="Password" required />
-            <span className="input-icon">
+          <div className="input-group pass-box">
+          {/* <div className='pass-box'> */}
+      <input  type={visible? "text" :"password"} className='form-control pass' placeholder="Password" required/>
+      <span className="input-icon">
               <i className="fas fa-lock"></i>
             </span>
+      <span onClick={()=> setVisible(!visible)} className="seenpass">
+      {visible?<i class="fa-regular fa-eye "></i> : <i class="fa-regular fa-eye-slash "></i> }
+      </span>
+      
+    {/* </div> */}
+            {/* <input type="password" className="form-control" placeholder="Password" required />
+            <span className="input-icon">
+              <i className="fas fa-lock"></i>
+            </span> */}
           </div>
           <button type="submit" className="login-btn my-3">Login</button>
           <a href='#' className="text-white">Forget your password ?</a>
