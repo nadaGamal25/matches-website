@@ -36,35 +36,8 @@ export default function Home() {
   ];
   return (
     <>
-     {/* <div className="home-page">
-      <nav className="navbar">
-        <div className="logo">⚽ Top Matches</div>
-        <button className="logout-btn">Logout</button>
-      </nav>
-
-      <header className="hero-section">
-        <h1>Never Miss a Match Again!</h1>
-        <p>Watch Live & Recorded Football Matches Anytime.</p>
-        <button className="watch-now-btn">Watch Now</button>
-      </header>
-
-      <section className="trending-matches">
-        <h2>🔥 Trending Matches</h2>
-        <div className="matches-list">
-          <div className="match-card">🏆 Real Madrid vs Barcelona</div>
-          <div className="match-card">⚡ Manchester City vs Liverpool</div>
-          <div className="match-card">🔥 PSG vs Bayern Munich</div>
-        </div>
-      </section>
-      </div> */}
-
 <div className="home-page">
-      {/* Navbar */}
-      <nav className="navbar">
-        <div className="logo ">
-          <img className='main-logo' src={logo} alt="Logo"/>Top Matches</div>
-        <button className="btn btn-outline-warning fw-bold me-3">Logout</button>
-      </nav>
+      
 
       {/* Hero Section */}
       <header className="hero-section">
