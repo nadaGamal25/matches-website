@@ -59,7 +59,13 @@ export default function AdminNav({logoutAdmin}) {
                   </span>
                   </Link>
               </li>
-             
+              <li>
+                  <Link to="/category">
+                  <i class="fa-solid fa-layer-group bx"></i>
+                  <span class="text">Categories
+                  </span>
+                  </Link>
+              </li>
               <li>
               <Link onClick={logoutAdmin} class="logout" to='/admin'>
               <i class="fa-solid fa-angles-left bx"></i>

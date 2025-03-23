@@ -9,7 +9,7 @@ export default function Teams() {
       const [teams,setTeams]=useState([])
       async function getTeams() {
         try {
-          const response = await axios.get('http://localhost:3000/team/get-all');
+          const response = await axios.get('https://zad.onrender.com/team/get-all');
           console.log(response)
           setTeams(response.data.data)
           
@@ -40,7 +40,7 @@ export default function Teams() {
       
         try {
           const response = await axios.post(
-            `http://localhost:3000/team/add-new`,
+            `https://zad.onrender.com/team/add-new`,
             formData,
             {
                 headers: {
@@ -129,7 +129,7 @@ export default function Teams() {
   }
   
     try {
-      const response = await axios.post(`http://localhost:3000/team/edit-team`, formData,
+      const response = await axios.post(`https://zad.onrender.com/team/edit-team`, formData,
         {
             headers: {
                 Authorization: `basic ${localStorage.getItem('adminToken')}`,
@@ -199,7 +199,7 @@ export default function Teams() {
            {item.name?<td>{item.name}</td>:<td>_</td>}
            
            {item.image && item.image?.length !== 0 ?<td>
-            <a className="text-primary" onClick={() => openCarousel(item.image.replace('public', 'http://localhost:3000/'))}>image</a>
+            <a className="text-primary" onClick={() => openCarousel(item.image.replace('public', 'https://zad.onrender.com/'))}>image</a>
            </td>:<td>_</td>}
 
     <td><button className="btn btn-secondary" onClick={() => handleEditClickData(item)}>Update</button></td>

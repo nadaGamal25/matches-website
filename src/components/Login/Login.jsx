@@ -17,7 +17,7 @@ export default function Login({saveUserData}) {
 
   async function sendLoginDataToApi(){
     try {
-      const {data} = await axios.post(`http://localhost:3000/user/log-in`, theUser);
+      const {data} = await axios.post(`https://zad.onrender.com/user/log-in`, theUser);
         navigate('/home');
         localStorage.setItem('userToken', data.token);
         

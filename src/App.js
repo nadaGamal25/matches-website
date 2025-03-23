@@ -8,6 +8,7 @@ import AdminLogin from './components/AdminLogin/AdminLogin';
 import AdminLayout from './components/AdminLayout/AdminLayout';
 import CreateUser from './components/CreateUser/CreateUser';
 import Teams from './components/Teams/Teams';
+import Category from './components/Category/Category';
 
 function App() {
    const [userData, setuserData] = useState(null)
@@ -49,6 +50,7 @@ function App() {
     {path:'/',element:<AdminLayout setAdminData={setAdminData} adminData={adminData}/> ,children:[
       {path:'createUser',element:<CreateUser adminData={adminData}/>},
       {path:'teams',element:<Teams adminData={adminData}/>},
+      {path:'category',element:<Category adminData={adminData}/>},
     ]}
   ])
 

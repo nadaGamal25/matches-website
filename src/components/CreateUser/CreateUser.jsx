@@ -18,7 +18,7 @@ export default function CreateUser() {
     
       async function sendRegisterDataToApi(){
         try {
-            let response= await axios.post(`http://localhost:3000/user/create-user`,user,
+            let response= await axios.post(`https://zad.onrender.com/user/create-user`,user,
                 {
                     headers: {
                         Authorization: `basic ${localStorage.getItem('adminToken')}`,

@@ -17,7 +17,7 @@ export default function AdminLogin({saveAdminData}) {
   
     async function sendLoginDataToApi(){
       try {
-        const {data} = await axios.post(`http://localhost:3000/admin/login`, theUser);
+        const {data} = await axios.post(`https://zad.onrender.com/admin/login`, theUser);
           navigate('/createUser');
           localStorage.setItem('adminToken', data.token);
           
