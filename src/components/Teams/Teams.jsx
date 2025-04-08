@@ -199,7 +199,7 @@ export default function Teams() {
            {item.name?<td>{item.name}</td>:<td>_</td>}
            
            {item.image && item.image?.length !== 0 ?<td>
-            <a className="text-primary" onClick={() => openCarousel(item.image.replace('public', 'https://zad.onrender.com/'))}>image</a>
+            <a className="text-primary" onClick={() => openCarousel(item.image.replace('public/uploads', 'https://zad.onrender.com'))}>image</a>
            </td>:<td>_</td>}
 
     <td><button className="btn btn-secondary" onClick={() => handleEditClickData(item)}>Update</button></td>

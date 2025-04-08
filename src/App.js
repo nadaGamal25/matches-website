@@ -9,6 +9,8 @@ import AdminLayout from './components/AdminLayout/AdminLayout';
 import CreateUser from './components/CreateUser/CreateUser';
 import Teams from './components/Teams/Teams';
 import Category from './components/Category/Category';
+import AddMatch from './components/AddMatch/AddMatch';
+import Matches from './components/Matches/Matches';
 
 function App() {
    const [userData, setuserData] = useState(null)
@@ -51,6 +53,8 @@ function App() {
       {path:'createUser',element:<CreateUser adminData={adminData}/>},
       {path:'teams',element:<Teams adminData={adminData}/>},
       {path:'category',element:<Category adminData={adminData}/>},
+      {path:'addMatch',element:<AddMatch adminData={adminData}/>},
+      {path:'matches',element:<Matches adminData={adminData}/>},
     ]}
   ])
 

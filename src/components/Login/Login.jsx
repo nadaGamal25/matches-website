@@ -8,7 +8,7 @@ export default function Login({saveUserData}) {
   let navigate= useNavigate(); //hoke
   const [errorList, seterrorList]= useState([]); 
   const [theUser,setUser] =useState({
-    phone:'',
+    username:'',
     password:''
   })
   const [visible , setVisible] =useState(false);
@@ -28,7 +28,7 @@ export default function Login({saveUserData}) {
     } catch (error) {
       setisLoading(true)
       console.log(error);
-      setError('Invalid phone number or password');
+      setError('Invalid username number or password');
       // window.alert('wrong password or email');
     }
   }
@@ -55,7 +55,7 @@ console.log(myUser);
 
 function validateLoginForm(){
 let scheme= Joi.object({
-phone:Joi.string().required(),
+username:Joi.string().required(),
 password:Joi.string().required()
 
 });
@@ -112,13 +112,13 @@ return scheme.validate(theUser, {abortEarly:false});
         <p className="tagline">Your Gateway to Live & Recorded Matches!</p>
         <form onSubmit={submitLoginForm} className="login-form">
         <div className="input-group">
-            <input type="text" className="form-control" placeholder="Phone" name='phone' onChange={getUserData} required />
+            <input type="text" className="form-control" placeholder="username" name='username' onChange={getUserData} required />
             <span className="input-icon">
-              <i className="fas fa-phone"></i>
+              <i className="fas fa-user"></i>
             </span>
             {/* {errorList.map((err,index)=>{
       if(err.context.label ==='password'){
-        return <div key={index} className="alert alert-danger my-2">phone is not correct</div>
+        return <div key={index} className="alert alert-danger my-2">username is not correct</div>
       }
     })} */}
           </div>

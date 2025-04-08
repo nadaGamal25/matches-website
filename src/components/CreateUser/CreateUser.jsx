@@ -5,7 +5,7 @@ import Joi from 'joi';
 export default function CreateUser() {
     const [user,setUser] =useState({
         name:'',
-        phone:'',
+        username:'',
         email:'',
         password:'',
         durationInDays:'',
@@ -69,10 +69,10 @@ export default function CreateUser() {
       function validateRegisterForm(){
         let scheme= Joi.object({
           name:Joi.string().min(2).required(),
-          phone:Joi.string(),
+          username:Joi.string().required(),
           email:Joi.string().required(),
-          password:Joi.string(),
-          durationInDays:Joi.number(),
+          password:Joi.string().required(),
+          durationInDays:Joi.number().required(),
        
     
         });
@@ -103,10 +103,10 @@ export default function CreateUser() {
      
    })}
     
-   <label htmlFor="phone">Phone  :</label>
-   <input onChange={getUserData} type="text" className='my-input my-2 form-control' name='phone' id='phone' />
+   <label htmlFor="username">username  :</label>
+   <input onChange={getUserData} type="text" className='my-input my-2 form-control' name='username' id='username' />
    {errorList.map((err,index)=>{
-     if(err.context.label ==='phone'){
+     if(err.context.label ==='username'){
        return <div key={index} className="text-danger my-2">this input is required</div>
      }
      

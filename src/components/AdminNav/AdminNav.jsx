@@ -67,6 +67,20 @@ export default function AdminNav({logoutAdmin}) {
                   </Link>
               </li>
               <li>
+                  <Link to="/addMatch">
+                  <i class="fa-solid fa-circle-plus bx"></i>
+                  <span class="text">Add Match
+                  </span>
+                  </Link>
+              </li>
+              <li>
+                  <Link to="/matches">
+                  <i class="fa-solid fa-futbol bx"></i>
+                  <span class="text">Matches
+                  </span>
+                  </Link>
+              </li>
+              <li>
               <Link onClick={logoutAdmin} class="logout" to='/admin'>
               <i class="fa-solid fa-angles-left bx"></i>
                       <span class="text">Logout</span>
