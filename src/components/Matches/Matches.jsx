@@ -1,5 +1,6 @@
 import React ,{ useState ,useEffect } from 'react'
 import axios from 'axios'
+import {Modal ,Button} from 'react-bootstrap';
 
 export default function Matches() {
     useEffect(()=>{
@@ -21,6 +22,12 @@ export default function Matches() {
         }
       }
     
+      const [selectedImages, setSelectedImages] = useState([]);
+                const [showModal, setShowModal] = useState(false);
+                function openCarousel(images) {
+                  setSelectedImages(images);
+                  setShowModal(true);
+                }
   return (
     <>
     <div className='px-2 admin' id='content'>
@@ -33,6 +40,7 @@ export default function Matches() {
        <th scope="col"> firstTeam </th>
        <th scope="col"> secondTeam </th>
        <th scope="col"> staduim </th>
+       <th scope="col"> image </th>
        <th scope="col"> date </th>
        <th scope="col"> urls </th>
        <th></th>           
@@ -48,7 +56,10 @@ export default function Matches() {
            {item.categ?<td>{item.categ.name}</td>:<td>_</td>}
            {item.firstTeam?<td>{item.firstTeam.name}</td>:<td>_</td>}
            {item.secondTeam?<td>{item.secondTeam.name}</td>:<td>_</td>}
-           {item.stadium?<td>{item.stadium}</td>:<td>_</td>}
+           {item.stadium?.name?<td>{item.stadium.name}</td>:<td>_</td>}
+           {item.stadium?.img?<td>
+            <a className="text-primary" onClick={() => openCarousel(item.stadium.img.replace('public', 'https://zad.onrender.com'))}>image</a>
+           </td>:<td>_</td>}
            {item.date?<td>{item.date}</td>:<td>_</td>}
            <td>
   {item.urls && item.urls.length > 0 ? (
@@ -110,6 +121,26 @@ export default function Matches() {
     </table>
     </div>
     </div>
+    <Modal show={showModal} onHide={() => setShowModal(false)} size="lg" centered>
+                <Modal.Header closeButton >
+                  <Modal.Title> </Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+          <div class="carousel-inner">
+        
+                        <div className='text-center'>
+                        <img src={selectedImages} class="d-block w-50" alt="..."/>
+                      </div>
+                   
+           
+            
+          </div>
+          
+        </div>
+                  
+                </Modal.Body>
+              </Modal>
     </>
   )
 }

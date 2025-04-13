@@ -36,47 +36,96 @@ export default function AddMatch() {
     const [newData, setNewData] = useState({
         firstTeam: '',
         secondTeam: '',
-        stadium: '',
+        stadiumName: '',
         date: '',
         categ: '',
         urls: [], 
+        image:''
       });
       const [newDesc, setNewDesc] = useState('');
 const [newUrl, setNewUrl] = useState('');
 
       const [errorList, setErrorList] = useState([]);
       const [isLoading, setIsLoading] = useState(false);
-    
+          const [selectedFiles, setselectedFiles] = useState([]);
+          function handleFileChange(event) {
+            const files = Array.from(event.target.files);
+            setselectedFiles((prevFiles) => [...prevFiles, ...files]);
+          }
       // Function to handle form submission
       async function sendDataToApi(dataToSend) {
+        const formData = new FormData();
+      
+        // Append text fields
+        formData.append('firstTeam', dataToSend.firstTeam);
+        formData.append('secondTeam', dataToSend.secondTeam);
+        formData.append('stadiumName', dataToSend.stadiumName);
+        formData.append('date', dataToSend.date);
+        formData.append('categ', dataToSend.categ);
+      
+        // Append urls (stringified because it's an array of objects)
+        formData.append('urls', JSON.stringify(dataToSend.urls));
+      
+        // Append images
+        selectedFiles.forEach((file) => {
+          formData.append('image', file); // Backend should expect 'image' as an array
+        });
+      
         try {
           const response = await axios.post(
             'https://zad.onrender.com/match/add-new-match',
-            dataToSend,
+            formData,
             {
               headers: {
                 Authorization: `basic ${localStorage.getItem('adminToken')}`,
+                // Don't set Content-Type manually. Let browser set it (with multipart boundary).
               },
             }
           );
           console.log(response);
           setIsLoading(false);
-          window.alert('added successfully');
+          window.alert('Added successfully');
         } catch (error) {
           console.log(error);
           setIsLoading(false);
-          alert(error.response.data.message || 'error occured');
+          alert(error.response?.data?.message || 'Error occurred');
         }
       }
+      
+      // async function sendDataToApi(dataToSend) {
+      //   const formData = new FormData();        
+        
+      //   selectedFiles.forEach((file) => {
+      //     formData.append('image', file);})
+      //   try {
+      //     const response = await axios.post(
+      //       'https://zad.onrender.com/match/add-new-match',
+      //       dataToSend,
+      //       {
+      //         headers: {
+      //           Authorization: `basic ${localStorage.getItem('adminToken')}`,
+      //         },
+      //       }
+      //     );
+      //     console.log(response);
+      //     setIsLoading(false);
+      //     window.alert('added successfully');
+      //   } catch (error) {
+      //     console.log(error);
+      //     setIsLoading(false);
+      //     alert(error.response.data.message || 'error occured');
+      //   }
+      // }
     
       // Function to handle form validation
       function validateForm() {
         let schema = Joi.object({
           firstTeam: Joi.string().required(),
           secondTeam: Joi.string().required(),
-          stadium: Joi.string().required(),
+          stadiumName: Joi.string().required(),
           date: Joi.date().required(),
           categ: Joi.string().required(),
+          image: Joi.required(),
           urls: Joi.array().items(
             Joi.object({
               url: Joi.string().uri().required(),
@@ -183,13 +232,13 @@ const [newUrl, setNewUrl] = useState('');
             })}
           </select>
               
-                   <label htmlFor="">stadium :</label>
+                   <label htmlFor="">stadium Name :</label>
               <input
                 onChange={getNewData}
                 type="text"
                 className="my-input my-2 form-control"
-                name="stadium"
-                value={newData.stadium}
+                name="stadiumName"
+                value={newData.stadiumName}
               />
               <label htmlFor="">date :</label>
               <input
@@ -199,6 +248,14 @@ const [newUrl, setNewUrl] = useState('');
                 name="date"
                 value={newData.date}
               />
+              <label htmlFor="">image : </label>
+            <input
+              type="file"
+              className="my-2 my-input form-control"
+              name="image"
+              multiple
+              onChange={handleFileChange} required
+            />
 
               {/* urls Input Fields */}
               <label htmlFor="">urls:</label>
