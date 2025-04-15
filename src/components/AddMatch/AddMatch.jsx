@@ -128,7 +128,7 @@ const [newUrl, setNewUrl] = useState('');
           image: Joi.required(),
           urls: Joi.array().items(
             Joi.object({
-              url: Joi.string().uri().required(),
+              url: Joi.string().required(),
               desc: Joi.string().required()
             })
           ).required(),
@@ -289,8 +289,9 @@ const [newUrl, setNewUrl] = useState('');
               {/* Display the added  links */}
               <div className="mt-2">
   {newData.urls.map((item, index) => (
-    <div key={index}>
-      <strong>{item.desc}:</strong> <a href={item.url} target="_blank" rel="noopener noreferrer">{item.url}</a>
+    <div key={index} className='overflow-hidden'>
+      <strong>{item.desc}:</strong> <a href={item.url} target="_blank" rel="noopener noreferrer" 
+      >{item.url}</a>
     </div>
   ))}
 </div>

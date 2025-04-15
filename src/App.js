@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import axios from 'axios';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Home from './components/Home/Home';
 import Layout from './components/Layout/Layout';
@@ -11,8 +12,30 @@ import Teams from './components/Teams/Teams';
 import Category from './components/Category/Category';
 import AddMatch from './components/AddMatch/AddMatch';
 import Matches from './components/Matches/Matches';
+import Users from './components/Users/Users';
+import AllMatches from './components/AllMatches/AllMatches';
+import WatchMatch from './components/WatchMatch/WatchMatch';
 
 function App() {
+  useEffect(()=>{
+    getData()
+  },[])
+  const [data,setData]=useState([])
+  async function getData() {
+    try {
+      const response = await axios.get('https://zad.onrender.com/match/get-all-matchs',{
+        headers: {
+            Authorization: `basic ${localStorage.getItem('userToken')}`,
+    }
+});
+      console.log(response)
+      setData(response.data.data)
+      
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
    const [userData, setuserData] = useState(null)
 
   async function saveUserData(){
@@ -48,6 +71,9 @@ function App() {
 
     {path:'/',element:<Layout setuserData={setuserData} userData={userData}/> ,children:[
       {path:'home',element:<Home userData={userData}/>},
+      {path:'all-matches',element:<AllMatches userData={userData}/>},
+      {path:"/watch/:id",element:<WatchMatch data={data}  userData={userData}/>},
+
     ]},
     {path:'/',element:<AdminLayout setAdminData={setAdminData} adminData={adminData}/> ,children:[
       {path:'createUser',element:<CreateUser adminData={adminData}/>},
@@ -55,6 +81,7 @@ function App() {
       {path:'category',element:<Category adminData={adminData}/>},
       {path:'addMatch',element:<AddMatch adminData={adminData}/>},
       {path:'matches',element:<Matches adminData={adminData}/>},
+      {path:'users',element:<Users adminData={adminData}/>},
     ]}
   ])
 

@@ -53,6 +53,13 @@ export default function AdminNav({logoutAdmin}) {
                   </Link>
               </li>
               <li>
+                  <Link to="/users">
+                  <i class="fa-solid fa-users bx"></i>
+                  <span class="text"> Users
+                  </span>
+                  </Link>
+              </li>
+              <li>
                   <Link to="/teams">
                   <i class="fa-solid fa-users-line bx"></i>
                   <span class="text">Teams

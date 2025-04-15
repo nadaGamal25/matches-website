@@ -177,6 +177,12 @@ input:focus{
 .text-green{
   color: var(--primary-color);
 }
+.bg-accent{
+  background: var(--accent-color);
+}
+.bg-live{
+  background: var(--highlight-color);
+}
 
 /* Navbar */
 /* .navbar {
@@ -256,6 +262,7 @@ input:focus{
 .watch-now-btn:hover {
   background: #00A650;
 }
+
 
 /* Trending Matches
 .trending-matches {
@@ -398,6 +405,33 @@ input:focus{
 }
 
 /* Card Container */
+.link-view{
+ color: var(--light-gray) !important;
+ font-weight: 600;
+ padding: 2px 5px 5px 5px;
+ margin-top: 8px;
+ border: 0.2px solid var(--light-gray);
+ height: 30px !important;
+ border-radius: 5px;
+ -webkit-border-radius: 5px;
+ -moz-border-radius: 5px;
+ -ms-border-radius: 5px;
+ -o-border-radius: 5px;
+}
+.link-view:hover{
+  color: var(--primary-color) !important;
+  font-weight: 600;
+  padding: 2px 5px 5px 5px;
+  margin-top: 8px;
+  border: 0.2px solid var(--primary-color);
+  height: 30px !important;
+  border-radius: 5px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -o-border-radius: 5px;
+ }
+
 .match-cards {
   display: flex;
   gap: 20px;
@@ -408,8 +442,9 @@ input:focus{
 /* Individual Match Card */
 .match-card {
   /*background: linear-gradient(to right, #1C1C1C, #333333);
-  */background-image: url(../src/assets/background.jpg);
-  background-size: cover;
+  */
+  background-image: url(../src/assets/background.jpg);
+  background-size: 100% 100% !important;
   border-radius: 15px ;
   padding: 15px;
   width: 280px;
@@ -429,7 +464,7 @@ input:focus{
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.4);
+  /* background: rgba(0, 0, 0, 0.4); */
   z-index: 1;
   border-radius: 15px;
   -webkit-border-radius: 15px;
@@ -454,9 +489,9 @@ input:focus{
 }
 
 .team-logo {
-  width: 50px;
-  height: 50px;
-  object-fit: contain;
+  width: 50px !important;
+  height: 50px !important;
+  /* object-fit: contain; */
 }
 
 .vs-text {
@@ -472,7 +507,6 @@ input:focus{
 }
 
 .match-status {
-  background: var(--accent-color);
   color: black;
   font-size: 0.9rem;
   font-weight: bold;
@@ -480,8 +514,12 @@ input:focus{
   border-radius: 5px;
   display: inline-block;
   margin-bottom: 5px;
+  cursor: pointer;
 }
-
+.arrow{
+  font-size: 14px;
+  font-weight: 700 !important;
+}
 .match-time {
   color: #00A650;
   font-weight: bold;
@@ -768,3 +806,9 @@ nav form .form-input button{
   }
 }
 
+
+.watch-page {
+  padding: 20px;
+  background: #000;
+  color: #fff;
+}
