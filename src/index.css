@@ -12,7 +12,15 @@ body{
 .main-logo{
   width: 50px;
 }
-
+.my-table{
+  background-color: var(--light-gray);
+  background-color: #f9f9f9;
+  border-radius: 15px;
+  overflow-x: auto;
+}
+.my-table table td{
+  background-color: #f9f9f9;
+}
 a , button ,i{
   cursor: pointer;
   transition: all 0.3s;

@@ -80,16 +80,16 @@ export default function Matches() {
            
     <td>
 
-    {/* <button
+    <button
        className="btn btn-danger"
        onClick={() => {
          if (window.confirm("Are you sure you will delete it ?")) {
            axios
-             .get(`https://zad.onrender.com/match/remove-categ/${item._id}`, 
+             .get(`https://zad.onrender.com/match/delete-match/${item._id}`, 
               {
-                headers: {
-                    Authorization: `basic ${localStorage.getItem('adminToken')}`,
-            }
+               headers: {
+                Authorization: `basic ${localStorage.getItem('adminToken')}`,
+               },
              }
            )
              .then((response) => {
@@ -102,13 +102,13 @@ export default function Matches() {
              })
              .catch((error) => {
                console.error(error);
-                   // window.alert(error.response.data.data.error)
+                   window.alert(error.response.message)
              });
          }
        }}
      >
         Delete 
-     </button> */}
+     </button>
     </td>
     
          </tr>

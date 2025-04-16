@@ -208,30 +208,30 @@ export default function Teams() {
 
     <button
        className="btn btn-danger"
-    //    onClick={() => {
-    //      if (window.confirm("Are you sure you will delete it ?")) {
-    //        axios
-    //          .delete(`https://api//${item._id}`, 
-    //           {
-    //            headers: {
-    //              token: localStorage.getItem('adminToken'),
-    //            },
-    //          }
-    //        )
-    //          .then((response) => {
-    //            if (response.status === 200) {
-    //              console.log(response)
-    //              getTeams();
-    //                      window.alert('deleted successfully')
+       onClick={() => {
+         if (window.confirm("Are you sure you will delete it ?")) {
+           axios
+             .get(`https://zad.onrender.com/team/delete-team/${item._id}`, 
+              {
+               headers: {
+                Authorization: `basic ${localStorage.getItem('adminToken')}`,
+               },
+             }
+           )
+             .then((response) => {
+               if (response.status === 200) {
+                 console.log(response)
+                 getTeams();
+                         window.alert('deleted successfully')
     
-    //            }
-    //          })
-    //          .catch((error) => {
-    //            console.error(error);
-    //                // window.alert(error.response.data.data.error)
-    //          });
-    //      }
-    //    }}
+               }
+             })
+             .catch((error) => {
+               console.error(error);
+                   window.alert(error.response.message)
+             });
+         }
+       }}
      >
         Delete 
      </button>

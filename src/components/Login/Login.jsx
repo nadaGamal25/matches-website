@@ -142,7 +142,7 @@ return scheme.validate(theUser, {abortEarly:false});
           <button type="submit" className="login-btn my-3">
           {isLoading == true?<i class="fa-solid fa-spinner fa-spin"></i>:'Login'}
           </button>
-          <a href='#' className="text-white">Forget your password ?</a>
+          {/* <a href='#' className="text-white">Forget your password ?</a> */}
         </form>
       </div>
     </div>

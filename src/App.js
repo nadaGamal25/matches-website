@@ -15,26 +15,11 @@ import Matches from './components/Matches/Matches';
 import Users from './components/Users/Users';
 import AllMatches from './components/AllMatches/AllMatches';
 import WatchMatch from './components/WatchMatch/WatchMatch';
+import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute';
+import ProtectedAdminRoute from './components/ProtectedAdminRoute/ProtectedAdminRoute';
 
 function App() {
-  useEffect(()=>{
-    getData()
-  },[])
-  const [data,setData]=useState([])
-  async function getData() {
-    try {
-      const response = await axios.get('https://zad.onrender.com/match/get-all-matchs',{
-        headers: {
-            Authorization: `basic ${localStorage.getItem('userToken')}`,
-    }
-});
-      console.log(response)
-      setData(response.data.data)
-      
-    } catch (error) {
-      console.error(error);
-    }
-  }
+
 
    const [userData, setuserData] = useState(null)
 
@@ -70,18 +55,18 @@ function App() {
     {path:'/admin',element:<AdminLogin saveAdminData={saveAdminData} setAdminData={setAdminData} adminData={adminData}/>},
 
     {path:'/',element:<Layout setuserData={setuserData} userData={userData}/> ,children:[
-      {path:'home',element:<Home userData={userData}/>},
-      {path:'all-matches',element:<AllMatches userData={userData}/>},
-      {path:"/watch/:id",element:<WatchMatch data={data}  userData={userData}/>},
+      {path:'home',element:<ProtectedRoute> <Home userData={userData}/></ProtectedRoute>},
+      {path:'all-matches',element:<ProtectedRoute><AllMatches userData={userData}/></ProtectedRoute>},
+      {path:"/watch/:id",element:<ProtectedRoute><WatchMatch userData={userData}/></ProtectedRoute>},
 
     ]},
     {path:'/',element:<AdminLayout setAdminData={setAdminData} adminData={adminData}/> ,children:[
-      {path:'createUser',element:<CreateUser adminData={adminData}/>},
-      {path:'teams',element:<Teams adminData={adminData}/>},
-      {path:'category',element:<Category adminData={adminData}/>},
-      {path:'addMatch',element:<AddMatch adminData={adminData}/>},
-      {path:'matches',element:<Matches adminData={adminData}/>},
-      {path:'users',element:<Users adminData={adminData}/>},
+      {path:'createUser',element:<ProtectedAdminRoute><CreateUser adminData={adminData}/></ProtectedAdminRoute>},
+      {path:'teams',element:<ProtectedAdminRoute><Teams adminData={adminData}/></ProtectedAdminRoute>},
+      {path:'category',element:<ProtectedAdminRoute><Category adminData={adminData}/></ProtectedAdminRoute>},
+      {path:'addMatch',element:<ProtectedAdminRoute><AddMatch adminData={adminData}/></ProtectedAdminRoute>},
+      {path:'matches',element:<ProtectedAdminRoute><Matches adminData={adminData}/></ProtectedAdminRoute>},
+      {path:'users',element:<ProtectedAdminRoute><Users adminData={adminData}/></ProtectedAdminRoute>},
     ]}
   ])
 
