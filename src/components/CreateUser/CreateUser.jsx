@@ -57,14 +57,22 @@ export default function CreateUser() {
       
     }
     
-      function getUserData(e){
-        if (e && e.target) {
-        let myUser={...user};
-        myUser[e.target.name]= e.target.value;
+    function getUserData(e){
+      if (e && e.target) {
+        let myUser = { ...user };
+        let { name, value } = e.target;
+    
+        if (name === 'durationInDays') {
+          myUser[name] = Number(value); // convert to number
+        } else {
+          myUser[name] = value;
+        }
+    
         setUser(myUser);
         console.log(myUser);
-        }
       }
+    }
+    
     
       function validateRegisterForm(){
         let scheme= Joi.object({

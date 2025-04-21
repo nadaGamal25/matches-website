@@ -40,13 +40,13 @@ const closeModalSub = () => {
 };
 const [theDuration, setDuration] = useState('');
 async function updateSub(id) {
-    console.log(theDuration)
+  const durationAsNumber = Number(theDuration); // convert here
   try {
     const response = await axios.post(
       `https://zad.onrender.com/user/update-subscription`,
       {
         userId:id,
-        Duration: theDuration,
+        Duration: durationAsNumber,
       },
       {
         headers: {
