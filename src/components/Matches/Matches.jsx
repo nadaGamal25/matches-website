@@ -5,7 +5,35 @@ import {Modal ,Button} from 'react-bootstrap';
 export default function Matches() {
     useEffect(()=>{
         getData()
+        getTeams()
+        getCategs()
       },[])
+      const [categs,setCategs]=useState([])
+      async function getCategs() {
+        try {
+          const response = await axios.get('https://zad.onrender.com/match/get-all-categ',{
+            headers: {
+                Authorization: `basic ${localStorage.getItem('adminToken')}`,
+        }
+    });
+          console.log(response)
+          setCategs(response.data.data) 
+          
+        } catch (error) {
+          console.error(error);
+        }
+      }
+      const [teams,setTeams]=useState([])
+      async function getTeams() {
+        try {
+          const response = await axios.get('https://zad.onrender.com/team/get-all');
+          console.log(response)
+          setTeams(response.data.data)
+          
+        } catch (error) {
+          console.error(error);
+        }
+      }
       const [data,setData]=useState([])
       async function getData() {
         try {
@@ -28,6 +56,110 @@ export default function Matches() {
                   setSelectedImages(images);
                   setShowModal(true);
                 }
+
+      //edit data 
+  const [isModalOpenData, setIsModalOpenData] = useState(false);
+  const [editedData, setEditedData] = useState(null);
+  const [eData, seteData] = useState(null);
+    const handleEditClickData = (data) => {
+    seteData(data);
+    setEditedData({
+      id:data?._id || '',
+      firstTeam: data?.firstTeam?._id || '',
+      secondTeam: data?.secondTeam?._id || '',
+      stadiumName: data?.stadium?.name || '',
+      date: data?.date || '',
+      categ: data?.categ?._id || '',
+      image: data?.stadium?.img || [],
+      urls: data?.urls || [],
+    });
+    setIsModalOpenData(true);
+  };
+  
+  const closeModalData = () => {
+    setIsModalOpenData(false);
+    setEditedData(null);
+  };
+  
+  const handleInputChangeData = (event) => {
+    const { name, value } = event.target;
+    setEditedData((prev) => ({ ...prev, [name]: value }));
+  };
+  
+  const handleFileChangeEdit = (event) => {
+    const files = Array.from(event.target.files);
+    setEditedData((prev) => ({
+      ...prev,
+      image: [...prev.image, ...files],
+    }));
+  };
+
+  const handleUrlChange = (index, field, value) => {
+    setEditedData((prev) => {
+      const updatedUrls = [...prev.urls];
+      updatedUrls[index] = { ...updatedUrls[index], [field]: value };
+      return { ...prev, urls: updatedUrls };
+    });
+  };
+  
+  const handleAddUrl = () => {
+    setEditedData((prev) => ({
+      ...prev,
+      urls: [...prev.urls, { desc: '', url: '' }],
+    }));
+  };
+  
+  const handleRemoveUrl = (index) => {
+    setEditedData((prev) => {
+      const updatedUrls = [...prev.urls];
+      updatedUrls.splice(index, 1);
+      return { ...prev, urls: updatedUrls };
+    });
+  };
+  
+ 
+  const handleEditSubmitData = async (event) => {
+    console.log("Edited Data to Submit:", editedData);
+  
+    event.preventDefault();
+    const formData = new FormData();
+    formData.append('firstTeam', editedData.firstTeam);
+    formData.append('secondTeam', editedData.secondTeam);
+    formData.append('stadiumName', editedData.stadiumName);
+    formData.append('date', editedData.date);
+    formData.append('categ', editedData.categ);
+    // formData.append('urls', editedData.urls);
+    formData.append('urls', JSON.stringify(editedData.urls));
+
+    formData.append('id', eData._id);
+    
+    if (Array.isArray(editedData.image)) {
+      // If image is an array, loop through and append files to formData
+      editedData.image.forEach((file) => formData.append('image', file));
+  } else if (editedData.image) {
+      // If image is a single file, append it directly
+      formData.append('image', editedData.image);
+  }
+  
+    try {
+      console.log("Submitting edit match data:", formData);
+
+      const response = await axios.post(`https://zad.onrender.com/match/edit-match`, formData,
+        {
+            headers: {
+                Authorization: `basic ${localStorage.getItem('adminToken')}`,
+        }
+        }
+      );
+      alert("updated successfully");
+      console.log(response)
+      closeModalData();
+      getData();
+    } catch (error) {
+      console.error(error);
+      alert(error.response.data.message);
+    }
+  };                 
   return (
     <>
     <div className='px-2 admin' id='content'>
@@ -43,6 +175,7 @@ export default function Matches() {
        <th scope="col"> image </th>
        <th scope="col"> date </th>
        <th scope="col"> urls </th>
+       <th></th>           
        <th></th>           
            
        
@@ -74,7 +207,9 @@ export default function Matches() {
     <span>_</span>
   )}
 </td>
-
+<td><button className="btn btn-secondary" onClick={() => handleEditClickData(item)}>Update</button></td>
+           
+    <td></td>
           
 
            
@@ -121,6 +256,170 @@ export default function Matches() {
     </table>
     </div>
     </div>
+     {isModalOpenData && (
+            <Modal show={isModalOpenData} onHide={closeModalData}>
+              <Modal.Header>
+                <Modal.Title>update match</Modal.Title>
+              </Modal.Header>
+              <Modal.Body>
+                <form onSubmit={handleEditSubmitData}>
+                  <div className="row">
+                    <div className="col-md-6 pb-1">
+                      <label htmlFor="firstTeam">first team :</label>
+                      <select
+                    className="form-control my-2"
+                    name="firstTeam"
+                    value={editedData.firstTeam}
+                    onChange={handleInputChangeData}
+                    
+                  >
+                    <option value="">team</option>
+                    {teams &&
+                      teams.map((item, index) => (
+                        <option key={index} value={item._id}>
+                          {item.name}
+                        </option>
+                      ))}
+                  </select>
+                      
+                    </div>
+                    <div className="col-md-6 pb-1">
+                      <label htmlFor="secondTeam">second team :</label>
+                      <select
+                    className="form-control my-2"
+                    name="secondTeam"
+                    value={editedData.secondTeam}
+                    onChange={handleInputChangeData}
+                    
+                  >
+                    <option value="">team</option>
+                    {teams &&
+                      teams.map((item, index) => (
+                        <option key={index} value={item._id}>
+                          {item.name}
+                        </option>
+                      ))}
+                  </select>
+                    </div>
+                    <div className="col-md-6 pb-1">
+                      <label htmlFor="stadiumName">stadium name :</label>
+                      <input
+                        onChange={handleInputChangeData}
+                        value={editedData.stadiumName}
+                        type="text"
+                        className="my-input my-2 form-control"
+                        name="stadiumName"
+                      />
+                    </div>
+                    <div className="col-md-6 pb-1">
+                      <label htmlFor="date">date :</label>
+                      <input
+                        onChange={handleInputChangeData}
+                        value={editedData.date}
+                        type="datetime-local"
+                        className="my-input my-2 form-control"
+                        name="date"
+                      />
+                    </div>
+                    <div className="col-md-6 pb-1">
+                      <label htmlFor="categ">category :</label>
+                      <select
+                    className="form-control my-2"
+                    name="categ"
+                    value={editedData.categ}
+                    onChange={handleInputChangeData}
+                    
+                  >
+                    <option value="">category</option>
+                    {categs &&
+                      categs.map((item, index) => (
+                        <option key={index} value={item._id}>
+                          {item.name}
+                        </option>
+                      ))}
+                  </select>
+                  </div>
+                    
+                    <div className="col-md-6 pb-1">
+                      <label htmlFor="">image :</label>
+                      <input
+                        type="file"
+                        className="form-control my-2"
+                        multiple
+                        onChange={handleFileChangeEdit}
+                      />
+                    </div>
+                    {/* <div className="col-md-6 pb-1">
+                      <label htmlFor="date">urls :</label>
+                      <input
+                        onChange={handleInputChangeData}
+                        value={editedData.urls}
+                        type="text"
+                        className="my-input my-2 form-control"
+                        name="urls"
+                      />
+                    </div> */}
+                    <div className="col-12 pb-1">
+  <label>URLs:</label>
+  {editedData.urls && editedData.urls.length > 0 ? (
+    editedData.urls.map((item, index) => (
+      <div key={index} className="border rounded p-2 mb-2">
+        <div className="row">
+          <div className="col-md-5">
+            <input
+              type="text"
+              className="form-control mb-2"
+              placeholder="Description"
+              value={item.desc}
+              onChange={(e) => handleUrlChange(index, 'desc', e.target.value)}
+            />
+          </div>
+          <div className="col-md-5">
+            <input
+              type="text"
+              className="form-control mb-2"
+              placeholder="URL"
+              value={item.url}
+              onChange={(e) => handleUrlChange(index, 'url', e.target.value)}
+            />
+          </div>
+          <div className="col-md-2">
+            <button
+              type="button"
+              className="btn btn-danger w-100"
+              onClick={() => handleRemoveUrl(index)}
+            >
+              x
+            </button>
+          </div>
+        </div>
+      </div>
+    ))
+  ) : (
+    <p className="text-muted">No URLs added yet.</p>
+  )}
+  <button
+    type="button"
+    className="btn btn-secondary mt-2"
+    onClick={handleAddUrl}
+  >
+   add url
+  </button>
+</div>
+
+                    <div className="text-center pt-1">
+                      <button className="btn btn-primary">update</button>
+                    </div>
+                  </div>
+                </form>
+              </Modal.Body>
+              <Modal.Footer>
+                <Button variant="secondary" onClick={closeModalData}>
+                  close
+                </Button>
+              </Modal.Footer>
+            </Modal>
+       )}   
     <Modal show={showModal} onHide={() => setShowModal(false)} size="lg" centered>
                 <Modal.Header closeButton >
                   <Modal.Title> </Modal.Title>
@@ -140,7 +439,7 @@ export default function Matches() {
         </div>
                   
                 </Modal.Body>
-              </Modal>
+      </Modal>
     </>
   )
 }

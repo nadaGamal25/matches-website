@@ -437,6 +437,9 @@ input:focus{
   -o-border-radius: 5px;
  }
 
+ .categ-logo{
+  width: 40px;
+ }
 .match-cards {
   display: flex;
   gap: 20px;
@@ -520,6 +523,9 @@ input:focus{
   display: inline-block;
   margin-bottom: 5px;
   cursor: pointer;
+  text-align: center;
+  width: 150px;
+
 }
 .arrow{
   font-size: 14px;
@@ -794,9 +800,10 @@ nav form .form-input button{
   gap: 10px;
 }
 
-.section-title i {
+.section-title img {
   font-size: 2rem;
-  animation: pulse 2s infinite;
+  animation: pulse 1.5s infinite;
+  -webkit-animation: pulse 1.5s infinite;
 }
 
 @keyframes pulse {
@@ -817,3 +824,118 @@ nav form .form-input button{
   background: #000;
   color: #fff;
 }
+
+
+.trending-container {
+  /* max-width: 700px; */
+  margin: 30px auto;
+  border-radius: 10px;
+  overflow: auto;
+  background-color: #171717;
+}
+
+.trending-header {
+  background: linear-gradient(90deg, var(--primary-color) 0%, var(--accent-color) 60%, transparent 100%);
+  padding: 10px 20px;
+  display: flex;
+  align-items: center;
+}
+
+.trending-header h3 {
+  margin: 0;
+  font-weight: bold;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+}
+
+.trending-icon {
+  margin-right: 8px;
+  color: #ffeb3b;
+}
+
+.match-row {
+  padding: 15px 20px;
+  border-bottom: 1px solid #2a3347;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.match-info2 {
+  display: flex;
+  flex-direction: column;
+}
+
+.match-time2 {
+  color: var(--light-gray);
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 2px;
+}
+
+/* .match-league {
+  font-size: 12px;
+  color: #8a94a6;
+} */
+
+.live-indicator {
+  background-color: #e91e63;
+  color: white;
+  font-size: 10px;
+  padding: 2px 6px;
+  border-radius: 4px;
+  margin-left: 8px;
+}
+
+.teams-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  margin: 0 20px;
+}
+
+.team {
+  display: flex;
+  align-items: center;
+  margin: 0 15px;
+}
+
+.team-name {
+  margin: 0 10px;
+  font-size: 14px;
+  color: #ffc107;
+}
+
+.team-logo2 {
+  width: 30px;
+  height: 30px;
+  object-fit: contain;
+}
+
+.vs {
+  margin: 0 10px;
+  color: #8a94a6;
+  font-size: 14px;
+}
+
+/* .watch-btn {
+  background-color: #00bcd4;
+  color: white;
+  border: none;
+  border-radius: 20px;
+  padding: 5px 15px;
+  font-size: 14px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+.watch-btn:hover {
+  background-color: #00a0b7;
+}
+
+.watch-icon {
+  margin-left: 5px;
+} */

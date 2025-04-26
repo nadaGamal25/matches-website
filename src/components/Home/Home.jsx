@@ -73,17 +73,82 @@ export default function Home() {
         <a href='#watch' className="watch-now-btn">Watch Now</a>
       </header>
 
-      {/* Trending Matches Section */}
-      <div className="trending-section">
+      {[...new Map(
+  data
+    .filter(match => match.categ && match.categ._id) // filter out null or missing _id
+    .map(match => [match.categ._id, match.categ])
+).values()].map((category, i) => {
+  const matchesForCategory = data
+    .filter(match => match.categ && match.categ._id === category._id)
+    .slice(0, 8);
+
+  return (
+    <div className="trending-section" key={category._id}>
+      <div className="d-flex justify-content-between align-content-center ">
+        <h3 className="section-title">
+          <img className="categ-logo" src={category.img.replace('public', 'https://zad.onrender.com')} alt="" />
+          {category.name}
+        </h3>
+        <Link className="link-view me-4" to="/all-matches">View all</Link>
+      </div>
+
+      <div className="match-cards">
+        {matchesForCategory.map((match, index) => (
+          <div
+            className="match-card"
+            key={index}
+            style={{
+              backgroundImage: `url(${match.stadium?.img?.replace('public', 'https://zad.onrender.com')})`
+            }}
+          >
+            <div className="match-header">
+              <img
+                src={match.firstTeam.image.replace('public', 'https://zad.onrender.com')}
+                alt={match.firstTeam.name}
+                className="team-logo"
+              />
+              <span className="vs-text mx-4">VS</span>
+              <img
+                src={match.secondTeam.image.replace('public', 'https://zad.onrender.com')}
+                alt={match.secondTeam.name}
+                className="team-logo"
+              />
+            </div>
+            <div className="match-info">
+              <Link
+                to={`/watch/${match._id}`}
+                className={`match-status ${getMatchStatus(match.date) === 'live' ? 'bg-live' : 'bg-accent'}`}
+              >
+                {getMatchStatus(match.date)}
+                {getMatchStatus(match.date) !== 'upcoming' && (
+                  <>
+                    {' | watch '}
+                    <i className="fa-solid fa-caret-right arrow"></i>
+                  </>
+                )}
+              </Link>
+
+              <span className="match-time">{formatMatchDate(match.date)}</span>
+              <p className="teams">
+                {match.firstTeam.name} - {match.secondTeam.name}
+              </p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+})}
+
+
+      {/* <div className="trending-section">
         <div className="d-flex justify-content-between align-content-center">
         <h3 className="section-title">
-      <i class="fa-solid fa-fire text-warning"></i> Trending Matches
+      <img src={match.categ.img} alt="" /> {match.categ.name}
 </h3>
         <Link className="link-view me-4" to="/all-matches">View all</Link>
         </div>
       
-        {/* 🔥 
-        <i class="fa-solid fa-arrow-trend-up text-warning"></i> Trending</h2> */}
        <div className="match-cards">
         {data.filter(item=> item.categ?.name.toLowerCase() ==="trending").map((match, index) => (
           <div className="match-card" key={index}  style={{ backgroundImage: `url(${match.stadium?.img?.replace('public', 'https://zad.onrender.com')})`}}>
@@ -119,7 +184,7 @@ export default function Home() {
 <div className="trending-section" id='watch'>
 <div className="d-flex justify-content-between align-content-center">
 <h3 className="section-title">
-      <i class="fa-solid fa-circle-play text-green"></i> Upcoming Matches
+<img src={match.categ.img} alt="" /> {match.categ.name}
 </h3>
         <Link className="link-view me-4" to="/all-matches">View all</Link>
         </div>
@@ -161,7 +226,7 @@ export default function Home() {
     <div className="trending-section" id='watch'>
 <div className="d-flex justify-content-between align-content-center">
 <h3 className="section-title">
-      <i class="fa-solid fa-futbol text-warning"></i> League Matches
+<img src={match.categ.img} alt="" /> {match.categ.name}
 </h3>
         <Link className="link-view me-4" to="/all-matches">View all</Link>
         </div>
@@ -198,7 +263,7 @@ export default function Home() {
           </div>
         ))}
       </div>
-    </div>  
+    </div>   */}
    
     </div>
 

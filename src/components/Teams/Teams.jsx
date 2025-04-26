@@ -104,14 +104,7 @@ export default function Teams() {
       image: [...prev.image, ...files],
     }));
   };
-  const handleFileVehiclesEdit = (event) => {
-    const files = Array.from(event.target.files);
-    setEditedData((prev) => ({
-      ...prev,
-      vehiclesImgs: [...prev.vehiclesImgs, ...files],
-    }));
-  };
-  
+ 
   const handleEditSubmitData = async (event) => {
     console.log("Edited Data to Submit:", editedData);
   
@@ -144,7 +137,7 @@ export default function Teams() {
       console.error(error);
       alert(error.response.data.message);
     }
-  };      
+  };       
       return (
         <>
         <div className='p-4 admin' id='content'>

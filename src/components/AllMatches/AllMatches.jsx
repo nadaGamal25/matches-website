@@ -64,37 +64,72 @@ export default function AllMatches() {
       <h3 className="section-title text-center">
        All Matches
 </h3>
-       
-       <div className="match-cards">
-        {data.map((match, index) => (
-          <div className="match-card" key={index}  style={{ backgroundImage: `url(${match.stadium?.img?.replace('public', 'https://zad.onrender.com')})`}}>
-            <div className="match-header">
-              <img src={match.firstTeam.image.replace('public', 'https://zad.onrender.com')} alt={match.firstTeam.name} className="team-logo" />
-              <span className="vs-text mx-4">VS</span>
-              <img src={match.secondTeam.image.replace('public', 'https://zad.onrender.com')} alt={match.secondTeam.name} className="team-logo" />
+       {[...new Map(
+        data
+          .filter(match => match.categ && match.categ._id) // filter out null or missing _id
+          .map(match => [match.categ._id, match.categ])
+      ).values()].map((category, i) => {
+        const matchesForCategory = data
+          .filter(match => match.categ && match.categ._id === category._id);
+      
+        return (
+          <div className="trending-container " key={category._id}>
+      <div className="trending-header">
+        <h3>
+        <img className="categ-logo" src={category.img.replace('public', 'https://zad.onrender.com')} alt="" /> {category.name}
+        </h3>
+      </div>
+      
+      {matchesForCategory.map(match => (
+        <div key={match._id} className="match-row">
+          <div className="match-info2">
+            <div className="match-time2">
+            {formatMatchDate(match.date)}
             </div>
-            <div className="match-info">
-            <Link to={`/watch/${match._id}`}
-  className={`match-status ${
-    getMatchStatus(match.date) === "live" ? "bg-live" : "bg-accent"
-  }`}
->
-  {getMatchStatus(match.date)}
-  {getMatchStatus(match.date) !== "upcoming" && (
-    <>
-      {" | watch "}
-      <i className="fa-solid fa-caret-right arrow"></i>
-    </>
-  )}
-</Link>
-
-              <span className="match-time">{formatMatchDate(match.date)}</span>
-
-              <p className="teams">{match.firstTeam.name} - {match.secondTeam.name}</p>
+            {/* <div className="match-league">{match.league}</div> */}
+          </div>
+          
+          <div className="teams-container">
+            <div className="team">
+              <span className="team-name">{match.firstTeam.name}</span>
+              <img
+                src={match.firstTeam.image.replace('public', 'https://zad.onrender.com')}
+                alt={match.firstTeam.name}
+                className="team-logo2"
+              />
+            </div>
+            
+            <span className="vs">vs</span>
+            
+            <div className="team">
+            <img
+                src={match.secondTeam.image.replace('public', 'https://zad.onrender.com')}
+                alt={match.secondTeam.name}
+                className="team-logo2"
+              />
+              <span className="team-name">{match.secondTeam.name}</span>
             </div>
           </div>
-        ))}
-      </div>
+          
+          <Link
+                          to={`/watch/${match._id}`}
+                          className={`match-status ${getMatchStatus(match.date) === 'live' ? 'bg-live' : 'bg-accent'}`}
+                        >
+                          {getMatchStatus(match.date)}
+                          {getMatchStatus(match.date) !== 'upcoming' && (
+                            <>
+                              {' | watch '}
+                              <i className="fa-solid fa-caret-right arrow"></i>
+                            </>
+                          )}
+                        </Link>
+          
+        </div>
+      ))}
+    </div>
+          
+        );
+      })}
     </div>
     </div>
     </>

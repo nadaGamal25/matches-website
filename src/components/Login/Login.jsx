@@ -28,7 +28,8 @@ export default function Login({saveUserData}) {
     } catch (error) {
       setisLoading(true)
       console.log(error);
-      setError('Invalid username number or password');
+      alert(error.response.data.message)
+      setError(error.response.data.message);
       // window.alert('wrong password or email');
     }
   }
