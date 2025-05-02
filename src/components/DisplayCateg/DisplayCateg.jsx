@@ -1,16 +1,16 @@
-import ReactPlayer from 'react-player';
-import React ,{ useState ,useEffect } from 'react'
-import axios from 'axios'
-import { Link } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { Link, useParams } from 'react-router-dom';
+import axios from 'axios';
 
-export default function AllMatches() {
-    useEffect(()=>{
+export default function DisplayCateg() {
+      const { categ,id } = useParams();
+      useEffect(()=>{
         getData()
       },[])
       const [data,setData]=useState([])
       async function getData() {
         try {
-          const response = await axios.get('https://zad.onrender.com/match/get-all-matchs',{
+          const response = await axios.get(`https://zad.onrender.com/match/get-match-by-categ/${id}`,{
             headers: {
                 Authorization: `basic ${localStorage.getItem('userToken')}`,
         }
@@ -22,7 +22,7 @@ export default function AllMatches() {
           console.error(error);
         }
       }
-    
+
       function formatMatchDate(dateStr) {
         const date = new Date(dateStr);
       
@@ -39,6 +39,7 @@ export default function AllMatches() {
         return `${utcTime} - ${month} ${day}`;
       }
     
+      
       function getMatchStatus(matchDateStr) {
         const matchTime = new Date(matchDateStr); // match time in ISO or local format
         const now = new Date(); // device local time
@@ -53,31 +54,15 @@ export default function AllMatches() {
           return "recorded";
         }
       }
-      
   return (
     <>
-    <div className="home-page">
-    <div className="trending-section">
-      <h3 className="section-title text-center">
-       All Matches
-</h3>
-       {[...new Map(
-        data
-          .filter(match => match.categ && match.categ._id) // filter out null or missing _id
-          .map(match => [match.categ._id, match.categ])
-      ).values()].map((category, i) => {
-        const matchesForCategory = data
-          .filter(match => match.categ && match.categ._id === category._id);
-      
-        return (
-          <div className="trending-container " key={category._id}>
-      <div className="trending-header">
-        <h3>
-        <img className="categ-logo" src={category.img.replace('public', 'https://zad.onrender.com')} alt="" /> {category.name}
-        </h3>
-      </div>
-      
-      {matchesForCategory.map(match => (
+    <div className="display-categ-container trending-section">
+    <h3 className="section-title text-center">
+       {categ}
+</h3>  
+        <div className='trending-container'>
+              
+        {data && data.map(match => (
         <div key={match._id} className="match-row">
           <div className="match-info2">
             <div className="match-time2">
@@ -88,10 +73,10 @@ export default function AllMatches() {
           
           <div className="teams-container">
             <div className="team">
-              <span className="team-name">{match.firstTeam.name}</span>
+              <span className="team-name">{match.firstTeam?.name}</span>
               <img
-                src={match.firstTeam.image.replace('public', 'https://zad.onrender.com')}
-                alt={match.firstTeam.name}
+                src={(match?.secondTeam?.image || '').replace('public', 'https://zad.onrender.com')}
+                alt={match.firstTeam?.name}
                 className="team-logo2"
               />
             </div>
@@ -100,11 +85,11 @@ export default function AllMatches() {
             
             <div className="team">
             <img
-                src={match.secondTeam.image.replace('public', 'https://zad.onrender.com')}
-                alt={match.secondTeam.name}
+                src={(match?.secondTeam?.image || '').replace('public', 'https://zad.onrender.com')}
+                alt={match.secondTeam?.name}
                 className="team-logo2"
               />
-              <span className="team-name">{match.secondTeam.name}</span>
+              <span className="team-name">{match.secondTeam?.name}</span>
             </div>
           </div>
           
@@ -123,11 +108,11 @@ export default function AllMatches() {
           
         </div>
       ))}
-    </div>
-          
-        );
-      })}
-    </div>
+      
+        </div>
+        {data.length === 0?<div className='text-center text-white min-vh-100'>
+                no matches in this category till now
+            </div>:null}
     </div>
     </>
   )

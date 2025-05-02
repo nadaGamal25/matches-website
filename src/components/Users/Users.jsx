@@ -46,7 +46,7 @@ async function updateSub(id) {
       `https://zad.onrender.com/user/update-subscription`,
       {
         userId:id,
-        Duration: durationAsNumber,
+        durationInDays: durationAsNumber,
       },
       {
         headers: {

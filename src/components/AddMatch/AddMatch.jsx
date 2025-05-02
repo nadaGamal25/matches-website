@@ -39,6 +39,7 @@ export default function AddMatch() {
         stadiumName: '',
         date: '',
         categ: '',
+        desc: '',
         urls: [], 
         image:''
       });
@@ -62,6 +63,7 @@ const [newUrl, setNewUrl] = useState('');
         formData.append('stadiumName', dataToSend.stadiumName);
         formData.append('date', dataToSend.date);
         formData.append('categ', dataToSend.categ);
+        formData.append('desc', dataToSend.desc);
       
         // Append urls (stringified because it's an array of objects)
         formData.append('urls', JSON.stringify(dataToSend.urls));
@@ -120,18 +122,19 @@ const [newUrl, setNewUrl] = useState('');
       // Function to handle form validation
       function validateForm() {
         let schema = Joi.object({
-          firstTeam: Joi.string().required(),
-          secondTeam: Joi.string().required(),
-          stadiumName: Joi.string().required(),
+          firstTeam: Joi.string().allow('',null),
+          secondTeam: Joi.string().allow('',null),
+          stadiumName: Joi.string().allow('',null),
           date: Joi.date().required(),
           categ: Joi.string().required(),
+          desc: Joi.string().allow('',null),
           image: Joi.required(),
           urls: Joi.array().items(
             Joi.object({
               url: Joi.string().required(),
               desc: Joi.string().required()
             })
-          ).required(),
+          ),
         });
     
         return schema.validate(newData, { abortEarly: false });
@@ -256,7 +259,14 @@ const [newUrl, setNewUrl] = useState('');
               multiple
               onChange={handleFileChange} required
             />
-
+            <label htmlFor="">description :</label>
+              <input
+                onChange={getNewData}
+                type="text"
+                className="my-input my-2 form-control"
+                name="desc"
+                value={newData.desc}
+              />
               {/* urls Input Fields */}
               <label htmlFor="">urls:</label>
 <div className="row g-2 align-items-center">

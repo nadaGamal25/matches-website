@@ -17,6 +17,7 @@ import AllMatches from './components/AllMatches/AllMatches';
 import WatchMatch from './components/WatchMatch/WatchMatch';
 import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute';
 import ProtectedAdminRoute from './components/ProtectedAdminRoute/ProtectedAdminRoute';
+import DisplayCateg from './components/DisplayCateg/DisplayCateg';
 
 function App() {
 
@@ -58,6 +59,7 @@ function App() {
       {path:'home',element:<ProtectedRoute> <Home userData={userData}/></ProtectedRoute>},
       {path:'all-matches',element:<ProtectedRoute><AllMatches userData={userData}/></ProtectedRoute>},
       {path:"/watch/:id",element:<ProtectedRoute><WatchMatch userData={userData}/></ProtectedRoute>},
+      {path:"/display-categ/:categ/:id",element:<ProtectedRoute><DisplayCateg userData={userData}/></ProtectedRoute>},
 
     ]},
     {path:'/',element:<AdminLayout setAdminData={setAdminData} adminData={adminData}/> ,children:[

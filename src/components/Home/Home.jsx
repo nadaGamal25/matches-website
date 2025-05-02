@@ -9,7 +9,25 @@ export default function Home() {
 
   useEffect(()=>{
     getData()
+    getCategs()
   },[])
+  const [categories,setCategs]=useState([])
+  async function getCategs() {
+    try {
+      const response = await axios.get('https://zad.onrender.com/match/get-all-categ',{
+        headers: {
+            Authorization: `basic ${localStorage.getItem('userToken')}`,
+    }
+});
+      console.log(response)
+      setCategs(response.data.data)
+      
+    } catch (error) {
+      console.error(error);
+    }
+  }
+  const firstSix = categories.slice(0, 6);
+  const remaining = categories.slice(6);
   const [data,setData]=useState([])
   async function getData() {
     try {
@@ -24,7 +42,7 @@ export default function Home() {
     } catch (error) {
       console.error(error);
     }
-  }
+  } 
 
   function formatMatchDate(dateStr) {
     const date = new Date(dateStr);
@@ -43,14 +61,28 @@ export default function Home() {
   }
 
   
-  function getMatchStatus(matchDateStr) {
-    const matchDate = new Date(matchDateStr);
-    const matchTime = new Date(matchDate.toLocaleString("en-US", { timeZone: "Africa/Cairo" }));
-    const now = new Date(new Date().toLocaleString("en-US", { timeZone: "Africa/Cairo" }));
+  // function getMatchStatus(matchDateStr) {
+  //   const matchDate = new Date(matchDateStr);
+  //   const matchTime = new Date(matchDate.toLocaleString("en-US", { timeZone: "Africa/Cairo" }));
+  //   const now = new Date(new Date().toLocaleString("en-US", { timeZone: "Africa/Cairo" }));
   
-    const ninetyMins = 90 * 60 * 1000; // 90 minutes in ms
-    // console.log("Match Time (Egypt):", matchTime);
-    // console.log("Now (Egypt):", now);
+  //   const ninetyMins = 90 * 60 * 1000; // 90 minutes in ms
+  //   // console.log("Match Time (Egypt):", matchTime);
+  //   // console.log("Now (Egypt):", now);
+  //   if (now < matchTime) {
+  //     return "upcoming";
+  //   } else if (now >= matchTime && now <= new Date(matchTime.getTime() + ninetyMins)) {
+  //     return "live";
+  //   } else {
+  //     return "recorded";
+  //   }
+  //    }
+  function getMatchStatus(matchDateStr) {
+    const matchTime = new Date(matchDateStr); // match time in ISO or local format
+    const now = new Date(); // device local time
+  
+    const ninetyMins = 90 * 60 * 1000;
+  
     if (now < matchTime) {
       return "upcoming";
     } else if (now >= matchTime && now <= new Date(matchTime.getTime() + ninetyMins)) {
@@ -58,7 +90,6 @@ export default function Home() {
     } else {
       return "recorded";
     }
-    
   }
   
   return (
@@ -70,8 +101,28 @@ export default function Home() {
       <header className="hero-section">
         <h1>Never Miss a Match Again!</h1>
         <p>Watch Live & Recorded Football Matches Anytime.</p>
-        <a href='#watch' className="watch-now-btn">Watch Now</a>
+        <Link to='/all-matches' className="watch-now-btn">Watch Now</Link>
+        <div className="category-items">
+      {firstSix.map((cat) => (
+        <Link to={`/display-categ/${cat.name}/${cat._id}`} key={cat._id} className="categ-item">{cat.name}</Link>
+      ))}
+
+      {remaining.length > 0 && (
+        <div className="dropdown categ-item">
+        <span>
+          OTHERS <i className="fa-solid fa-chevron-down"></i>
+        </span>
+        <div className="dropdown-content">
+          {remaining.map((cat) => (
+            <Link to={`/display-categ/${cat.name}/${cat._id}`} key={cat._id} className="categ-item-others">{cat.name}</Link>
+          ))}
+        </div>
+      </div>
+       
+      )}
+    </div>
       </header>
+      
 
       {[...new Map(
   data
