@@ -10,6 +10,7 @@
     "@testing-library/user-event": "^13.5.0",
     "axios": "^1.8.3",
     "bootstrap": "^5.3.3",
+    "hls.js": "^1.6.2",
     "joi": "^17.13.3",
     "jwt-decode": "^4.0.0",
     "react": "^19.0.0",
@@ -19,6 +20,9 @@
     "react-player": "^2.16.0",
     "react-router-dom": "^7.3.0",
     "react-scripts": "5.0.1",
+    "shaka-player": "^4.14.10",
+    "video.js": "^8.22.0",
+    "videojs-http-source-selector": "^1.1.6",
     "web-vitals": "^2.1.4"
   },
   "scripts": {

@@ -78,14 +78,23 @@ export default function AllMatches() {
       </div>
       
       {matchesForCategory.map(match => (
-        <div key={match._id} className="match-row">
+        <div className="match-main-row">
+<div key={match._id} className="match-row">
           <div className="match-info2">
+            <div className='d-flex'>
+            <img
+                src={match?.stadium?.img?.replace('public', 'https://zad.onrender.com')}
+                alt={match.stadium?.name}
+                className="team-logo2 me-2"
+              />
             <div className="match-time2">
             {formatMatchDate(match.date)}
             </div>
-            {/* <div className="match-league">{match.league}</div> */}
+            </div>
+          
           </div>
           
+          {match.firstTeam?
           <div className="teams-container">
             <div className="team">
               <span className="team-name">{match.firstTeam.name}</span>
@@ -107,6 +116,7 @@ export default function AllMatches() {
               <span className="team-name">{match.secondTeam.name}</span>
             </div>
           </div>
+          :null}
           
           <Link
                           to={`/watch/${match._id}`}
@@ -122,6 +132,10 @@ export default function AllMatches() {
                         </Link>
           
         </div>
+        <div className="match-league">{match?.desc?.slice(0,150)}...</div>
+
+        </div>
+        
       ))}
     </div>
           

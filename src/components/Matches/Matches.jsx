@@ -69,6 +69,7 @@ export default function Matches() {
       secondTeam: data?.secondTeam?._id || '',
       stadiumName: data?.stadium?.name || '',
       date: data?.date || '',
+      desc: data?.desc || '',
       categ: data?.categ?._id || '',
       image: data?.stadium?.img || [],
       urls: data?.urls || [],
@@ -123,11 +124,21 @@ export default function Matches() {
   
     event.preventDefault();
     const formData = new FormData();
-    formData.append('firstTeam', editedData.firstTeam);
-    formData.append('secondTeam', editedData.secondTeam);
-    formData.append('stadiumName', editedData.stadiumName);
-    formData.append('date', editedData.date);
-    formData.append('categ', editedData.categ);
+    // formData.append('firstTeam', editedData.firstTeam);
+    // formData.append('secondTeam', editedData.secondTeam);
+    // formData.append('stadiumName', editedData.stadiumName);
+    // formData.append('date', editedData.date);
+    // formData.append('categ', editedData.categ);
+    Object.entries(editedData).forEach(([key, value]) => {
+      if (
+        value !== '' && 
+        value !== null && 
+        key !== 'urls' && 
+        key !== 'image'
+      ) {
+        formData.append(key, value);
+      }
+    });
     // formData.append('urls', editedData.urls);
     formData.append('urls', JSON.stringify(editedData.urls));
 
@@ -347,6 +358,16 @@ export default function Matches() {
                         className="form-control my-2"
                         multiple
                         onChange={handleFileChangeEdit}
+                      />
+                    </div>
+                    <div className="col-md-12 pb-1">
+                      <label htmlFor="date">description :</label>
+                      <input
+                        onChange={handleInputChangeData}
+                        value={editedData.desc}
+                        type="text"
+                        className="my-input my-2 form-control"
+                        name="desc"
                       />
                     </div>
                     {/* <div className="col-md-6 pb-1">

@@ -58,12 +58,24 @@ const [newUrl, setNewUrl] = useState('');
         const formData = new FormData();
       
         // Append text fields
-        formData.append('firstTeam', dataToSend.firstTeam);
-        formData.append('secondTeam', dataToSend.secondTeam);
-        formData.append('stadiumName', dataToSend.stadiumName);
-        formData.append('date', dataToSend.date);
-        formData.append('categ', dataToSend.categ);
-        formData.append('desc', dataToSend.desc);
+        // formData.append('firstTeam', dataToSend.firstTeam);
+        // formData.append('secondTeam', dataToSend.secondTeam);
+        // formData.append('stadiumName', dataToSend.stadiumName);
+        // formData.append('date', dataToSend.date);
+        // formData.append('categ', dataToSend.categ);
+        // formData.append('desc', dataToSend.desc);
+        // Append only non-empty fields
+Object.entries(dataToSend).forEach(([key, value]) => {
+  if (
+    value !== '' && 
+    value !== null && 
+    key !== 'urls' && 
+    key !== 'image'
+  ) {
+    formData.append(key, value);
+  }
+});
+
       
         // Append urls (stringified because it's an array of objects)
         formData.append('urls', JSON.stringify(dataToSend.urls));

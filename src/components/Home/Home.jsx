@@ -152,19 +152,22 @@ export default function Home() {
               backgroundImage: `url(${match.stadium?.img?.replace('public', 'https://zad.onrender.com')})`
             }}
           >
+            {match.firstTeam?
             <div className="match-header">
               <img
-                src={match.firstTeam.image.replace('public', 'https://zad.onrender.com')}
-                alt={match.firstTeam.name}
+                src={match?.firstTeam?.image.replace('public', 'https://zad.onrender.com')}
+                alt={match?.firstTeam?.name}
                 className="team-logo"
               />
               <span className="vs-text mx-4">VS</span>
               <img
-                src={match.secondTeam.image.replace('public', 'https://zad.onrender.com')}
-                alt={match.secondTeam.name}
+                src={match?.secondTeam?.image.replace('public', 'https://zad.onrender.com')}
+                alt={match?.secondTeam?.name}
                 className="team-logo"
               />
-            </div>
+            </div>: <div className="match-header">
+            <span className="vs-text py-4"></span>
+              </div>}
             <div className="match-info">
               <Link
                 to={`/watch/${match._id}`}
@@ -181,7 +184,7 @@ export default function Home() {
 
               <span className="match-time">{formatMatchDate(match.date)}</span>
               <p className="teams">
-                {match.firstTeam.name} - {match.secondTeam.name}
+                {match?.firstTeam?.name} - {match?.secondTeam?.name}
               </p>
             </div>
           </div>
