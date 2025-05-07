@@ -320,7 +320,7 @@ Object.entries(dataToSend).forEach(([key, value]) => {
 
 
               <div className="text-center">
-                <button className="btn btn-green mt-3">
+                <button className="btn btn-blue mt-3">
                   {isLoading ? (
                     <i className="fa-solid fa-spinner fa-spin"></i>
                   ) : (

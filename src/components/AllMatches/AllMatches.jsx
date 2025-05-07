@@ -50,14 +50,14 @@ export default function AllMatches() {
         } else if (now >= matchTime && now <= new Date(matchTime.getTime() + ninetyMins)) {
           return "live";
         } else {
-          return "recorded";
+          return "watch";
         }
       }
       
   return (
     <>
-    <div className="home-page">
-    <div className="trending-section">
+    <div className="home-page min-vh-100">
+    <div className="trending-section bg-blue">
       <h3 className="section-title text-center">
        All Matches
 </h3>
@@ -70,7 +70,7 @@ export default function AllMatches() {
           .filter(match => match.categ && match.categ._id === category._id);
       
         return (
-          <div className="trending-container " key={category._id}>
+          <div className="trending-container" key={category._id}>
       <div className="trending-header">
         <h3>
         <img className="categ-logo" src={category.img.replace('public', 'https://zad.onrender.com')} alt="" /> {category.name}
@@ -123,9 +123,8 @@ export default function AllMatches() {
                           className={`match-status ${getMatchStatus(match.date) === 'live' ? 'bg-live' : 'bg-accent'}`}
                         >
                           {getMatchStatus(match.date)}
-                          {getMatchStatus(match.date) !== 'upcoming' && (
+                          {getMatchStatus(match.date) === 'watch' && (
                             <>
-                              {' | watch '}
                               <i className="fa-solid fa-caret-right arrow"></i>
                             </>
                           )}

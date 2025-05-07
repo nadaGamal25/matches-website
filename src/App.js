@@ -54,9 +54,10 @@ function App() {
   let routers =createBrowserRouter([
     {index:true,element:<Login saveUserData={saveUserData} setuserData={setuserData} userData={userData}/>},
     {path:'/admin',element:<AdminLogin saveAdminData={saveAdminData} setAdminData={setAdminData} adminData={adminData}/>},
-
+    {path:'home',element:<ProtectedRoute setuserData={setuserData} userData={userData}> <Home setuserData={setuserData}  userData={userData}/></ProtectedRoute>},
+    
     {path:'/',element:<Layout setuserData={setuserData} userData={userData}/> ,children:[
-      {path:'home',element:<ProtectedRoute> <Home userData={userData}/></ProtectedRoute>},
+      
       {path:'all-matches',element:<ProtectedRoute><AllMatches userData={userData}/></ProtectedRoute>},
       {path:"/watch/:id",element:<ProtectedRoute><WatchMatch userData={userData}/></ProtectedRoute>},
       {path:"/display-categ/:categ/:id",element:<ProtectedRoute><DisplayCateg userData={userData}/></ProtectedRoute>},

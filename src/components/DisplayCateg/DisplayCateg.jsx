@@ -51,17 +51,21 @@ export default function DisplayCateg() {
         } else if (now >= matchTime && now <= new Date(matchTime.getTime() + ninetyMins)) {
           return "live";
         } else {
-          return "recorded";
+          return "watch";
         }
       }
   return (
     <>
-    <div className="display-categ-container trending-section">
-    <h3 className="section-title text-center">
+    <div className="display-categ-container trending-section bg-blue">
+    {/* <h3 className="section-title text-center">
        {categ}
-</h3>  
+</h3>   */}
         <div className='trending-container'>
-              
+        <div className="trending-header">
+        <h3>
+       {categ}
+        </h3>
+      </div>
         {data && data.map(match => (
           <div className="match-main-row">
         <div key={match._id} className="match-row">
@@ -106,9 +110,8 @@ export default function DisplayCateg() {
                           className={`match-status ${getMatchStatus(match.date) === 'live' ? 'bg-live' : 'bg-accent'}`}
                         >
                           {getMatchStatus(match.date)}
-                          {getMatchStatus(match.date) !== 'upcoming' && (
+                          {getMatchStatus(match.date) === 'watch' && (
                             <>
-                              {' | watch '}
                               <i className="fa-solid fa-caret-right arrow"></i>
                             </>
                           )}

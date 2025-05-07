@@ -4,13 +4,21 @@ import logo2 from "../../assets/manchester.jpg"
 import ReactPlayer from 'react-player';
 import React ,{ useState ,useEffect } from 'react'
 import axios from 'axios'
-import { Link } from "react-router-dom";
-export default function Home() {
-
+import { Link, useNavigate } from "react-router-dom";
+export default function Home({userData,setuserData}) {
+  let navigate= useNavigate();
+  function logout(){
+    localStorage.removeItem('userToken');
+    setuserData(null);
+    navigate('/')
+  }
   useEffect(()=>{
     getData()
     getCategs()
   },[])
+  const [visible,setVisible]=useState(false)
+
+  
   const [categories,setCategs]=useState([])
   async function getCategs() {
     try {
@@ -60,23 +68,7 @@ export default function Home() {
     return `${utcTime} - ${month} ${day}`;
   }
 
-  
-  // function getMatchStatus(matchDateStr) {
-  //   const matchDate = new Date(matchDateStr);
-  //   const matchTime = new Date(matchDate.toLocaleString("en-US", { timeZone: "Africa/Cairo" }));
-  //   const now = new Date(new Date().toLocaleString("en-US", { timeZone: "Africa/Cairo" }));
-  
-  //   const ninetyMins = 90 * 60 * 1000; // 90 minutes in ms
-  //   // console.log("Match Time (Egypt):", matchTime);
-  //   // console.log("Now (Egypt):", now);
-  //   if (now < matchTime) {
-  //     return "upcoming";
-  //   } else if (now >= matchTime && now <= new Date(matchTime.getTime() + ninetyMins)) {
-  //     return "live";
-  //   } else {
-  //     return "recorded";
-  //   }
-  //    }
+ 
   function getMatchStatus(matchDateStr) {
     const matchTime = new Date(matchDateStr); // match time in ISO or local format
     const now = new Date(); // device local time
@@ -88,7 +80,7 @@ export default function Home() {
     } else if (now >= matchTime && now <= new Date(matchTime.getTime() + ninetyMins)) {
       return "live";
     } else {
-      return "recorded";
+      return "watch";
     }
   }
   
@@ -99,6 +91,21 @@ export default function Home() {
 
       {/* Hero Section */}
       <header className="hero-section">
+        <div className="d-flex justify-content-between align-items-center nav-home position-relative">
+          <div>
+          <img src={logo} alt="" />
+          <button className='arrow-dropdown text-white' onClick={() => setVisible(!visible)}> Matches <i class="fa-solid fa-caret-down ms-2"></i> </button> 
+            
+        <div className={`arrow-dropdown-content ${visible?`d-block`:`d-none`}`} >
+          {categories.map((cat) => (
+            <a href={`http://localhost:3000/display-categ/${cat.name}/${cat._id}`} key={cat._id} className="categ-item-others">
+              <img src={cat.img} alt="" />
+              {cat.name}</a>
+          ))}
+        </div>
+        </div>
+          <div><button onClick={logout} className="btn btn-outline-light">Logout</button></div>
+        </div>
         <h1>Never Miss a Match Again!</h1>
         <p>Watch Live & Recorded Football Matches Anytime.</p>
         <Link to='/all-matches' className="watch-now-btn">Watch Now</Link>
@@ -174,9 +181,9 @@ export default function Home() {
                 className={`match-status ${getMatchStatus(match.date) === 'live' ? 'bg-live' : 'bg-accent'}`}
               >
                 {getMatchStatus(match.date)}
-                {getMatchStatus(match.date) !== 'upcoming' && (
+                {getMatchStatus(match.date) === 'watch' && (
                   <>
-                    {' | watch '}
+                    {/* {' | watch '} */}
                     <i className="fa-solid fa-caret-right arrow"></i>
                   </>
                 )}

@@ -91,7 +91,7 @@ async function updateSub(id) {
            {item.username?<td>{item.username}</td>:<td>_</td>}
            {item.subscriptionExpiresAt?<td>{item.subscriptionExpiresAt}</td>:<td>_</td>}
            <td>
-           <button className="btn btn-success" onClick={()=>{openModalSub(item._id)}}>update subscription</button>
+           <button className="btn btn-primary" onClick={()=>{openModalSub(item._id)}}>update subscription</button>
             </td>           
    
          </tr>

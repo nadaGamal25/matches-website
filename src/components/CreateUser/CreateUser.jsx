@@ -141,7 +141,7 @@ export default function CreateUser() {
      
    })}
    
-     <button className='btn btn-green mt-3'>
+     <button className='btn btn-blue mt-3'>
        {isLoading == true?<i class="fa-solid fa-spinner fa-spin"></i>:'Create Account'}
      </button>
     </form>

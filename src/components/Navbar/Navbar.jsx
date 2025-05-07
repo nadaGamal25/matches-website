@@ -6,7 +6,7 @@ import axios from 'axios'
 export default function Navbar({logout}) {
   const [visible,setVisible]=useState(false)
 
-  useEffect(()=>{
+  useEffect(()=>{ 
     getCategs()
   },[])
   const [categories,setCategs]=useState([])
@@ -43,7 +43,7 @@ export default function Navbar({logout}) {
           ))}
         </div>
           
-        <button onClick={logout} className="btn btn-outline-warning fw-bold me-3">Logout</button>
+        <button onClick={logout} className="btn btn-outline-light fw-bold me-3">Logout</button>
       </nav>
     </>
   )

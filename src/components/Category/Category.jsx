@@ -169,7 +169,7 @@ export default function Category() {
     
     
               <div className="text-center">
-               <button className='btn btn-green mt-3'>
+               <button className='btn btn-blue mt-3'>
                {isLoading == true?<i class="fa-solid fa-spinner fa-spin"></i>:'Add '}
               </button>
               </div>
